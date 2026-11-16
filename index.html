@@ -153,6 +153,8 @@ section{padding:70px 0;position:relative}
 @keyframes grow{to{transform:scaleY(.55)}}
 .frame{position:absolute;border:9px solid var(--ink);background:var(--c);box-shadow:4px 5px 0 rgba(0,0,0,.2);rotate:var(--r)}
 .rule{position:absolute;font-family:var(--f-display);font-size:1.25rem;padding:6px 12px 4px;border:3px solid var(--ink);background:#fff;rotate:var(--r);color:var(--ink)}
+.shot{display:block;width:100%;height:auto;border:7px solid #fff;box-shadow:5px 7px 0 rgba(0,0,0,.28);rotate:var(--r);margin-top:8px}
+.shot.small{width:min(340px,92%)}
 .pad{position:absolute;left:12%;top:16%;width:62%;aspect-ratio:2/1;background:var(--ink);border-radius:70px;rotate:-8deg}
 .pad::before{content:"✚";position:absolute;left:16%;top:50%;translate:0 -50%;color:var(--paper);font-size:2.6rem}
 .pad::after{content:"";position:absolute;right:16%;top:50%;width:22px;height:22px;border-radius:50%;background:var(--pink);translate:0 -70%;box-shadow:-26px 18px 0 var(--yellow)}
@@ -202,6 +204,7 @@ section{padding:70px 0;position:relative}
 .bye em{font-family:var(--f-hand);font-style:normal;text-transform:none;color:var(--yellow);font-weight:700}
 .contact{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
 .gh{display:inline-block;background:var(--pink);color:var(--paper);font-family:var(--f-display);text-transform:uppercase;font-size:1.6rem;padding:14px 24px 10px;text-decoration:none;rotate:-2deg;box-shadow:6px 6px 0 var(--ink);transition:translate .15s,box-shadow .15s}
+.gh.alt{background:var(--bg);color:var(--fg)}
 .gh:hover{translate:-3px -3px;box-shadow:10px 10px 0 var(--ink)}
 .gh small{display:block;font-family:var(--f-body);text-transform:none;font-size:.8rem;letter-spacing:0}
 .colophon{color:var(--paper);font-size:.8rem;margin-top:60px;border-top:2px solid var(--paper);padding-top:12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;text-transform:uppercase;letter-spacing:.1em}
@@ -386,7 +389,10 @@ section{padding:70px 0;position:relative}
     <p class="bye">Let's make <em>something.</em></p>
     <div class="contact">
       <a class="gh" href="https://github.com/madinaerzhan60">GitHub<small>github.com/madinaerzhan60</small></a>
-      <div class="todo" style="max-width:260px;rotate:2deg">✎ note to self: add email, LinkedIn or Telegram here</div>
+      <a class="gh alt" style="--bg:var(--yellow);--fg:var(--ink);rotate:1.5deg" href="mailto:madinaerzhankyzy60@gmail.com">Email<small>madinaerzhankyzy60@gmail.com</small></a>
+      <a class="gh alt" style="--bg:var(--blue);--fg:var(--paper);rotate:-1deg" href="https://www.linkedin.com/in/madina-yerzhankyzyy/">LinkedIn<small>in/madina-yerzhankyzyy</small></a>
+      <a class="gh alt" style="--bg:var(--paper);--fg:var(--ink);rotate:2deg" href="https://t.me/MD04D">Telegram<small>@MD04D</small></a>
+      <a class="gh alt" style="--bg:var(--mint);--fg:var(--ink);rotate:-2.5deg" href="https://www.instagram.com/rikixji/">Instagram<small>@rikixji</small></a>
     </div>
     <div class="colophon"><span>Madina Yerzhankyzy · 2026</span><span>Cut, pasted and coded in Almaty</span></div>
   </div>
@@ -399,7 +405,6 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const rnd = (a,b)=>a+Math.random()*(b-a);
 
 /* ---------- project data ---------- */
-const TODO = '✎ my part + what I learned: to write in my own words';
 const P = [
  {n:'01',c:'c-blue',title:'SkyShift',stamp:'Team hackathon',cat:'scientific visualization · space technology · interactive web',
   art:'<div class="ph-sq" style="left:4%;top:6%;rotate:-6deg"><i style="left:20%;top:30%"></i><i style="left:70%;top:20%"></i><i style="left:55%;top:75%"></i><i class="mv" style="left:38%;top:55%"></i></div><div class="ph-sq" style="right:6%;top:22%;rotate:5deg"><i style="left:20%;top:30%"></i><i style="left:70%;top:20%"></i><i style="left:55%;top:75%"></i><i class="mv" style="left:38%;top:55%;animation-delay:-1.2s"></i></div><p class="hand" style="position:absolute;left:6%;bottom:0;color:var(--yellow)">same sky, months apart. one dot moved.</p>',
@@ -408,7 +413,7 @@ const P = [
    ['Vision','Let people who are not astrophysicists see that comparison and try it themselves.'],
    ['Solution','Our team built an offline Python pipeline that turns SPHEREx images into static pictures and data, plus a web tool with a parallax simulator, a comparison view that only pairs images of nearly the same wavelength, and a timelapse of any point in the sky.'],
    ['Honest note','The repository documents a blind test on Neptune, a planet we already know. Nothing here claims a Planet X discovery.']],
-  tech:['React','TypeScript','Vite','Python','NASA IRSA SPHEREx data'], todo:TODO,
+  tech:['React','TypeScript','Vite','Python','NASA IRSA SPHEREx data'],
   links:[['Live site','https://nasa-spherex-seven.vercel.app/'],['Repository','https://github.com/aknur3289-spec/nasa-spherex']]},
  {n:'02',c:'c-pink',title:'OFE SDU',stamp:'Team project',cat:'full-stack · product · university entrepreneurship',
   art:'<div class="win"><div><i></i><i></i><i></i><i></i></div></div>',
@@ -416,7 +421,7 @@ const P = [
   notes:[['Problem','Startups, events and opportunities at the university were hard for students to find in one place.'],
    ['Vision','One platform for the whole entrepreneurial ecosystem at SDU.'],
    ['Solution','A site built with a team: project and startup showcases, events and news, sign-in with Google, admin tools, multilingual and responsive pages, all backed by a database.']],
-  tech:['React','Vite','TypeScript','Supabase','Google OAuth','Vercel'], todo:TODO,
+  tech:['React','Vite','TypeScript','Supabase','Google OAuth','Vercel'],
   links:[['Visit ofesdu.app','https://ofesdu.app']]},
  {n:'03',c:'c-yellow',title:'SARAP',stamp:'In development',cat:'artificial intelligence · data analytics · full-stack',
   art:'<span class="bub" style="left:4%;top:8%;--r:-5deg">★★★★★ loved it</span><span class="bub" style="left:14%;top:38%;--r:4deg">★★☆☆☆ too slow…</span><span class="bub" style="left:2%;top:68%;--r:-3deg">жақсы! · хорошо!</span><div class="bars"><i style="height:45%;--i:1"></i><i style="height:80%;--i:2"></i><i style="height:60%;--i:3"></i><i style="height:100%;--i:4"></i></div>',
@@ -425,22 +430,22 @@ const P = [
    ['Vision','Turn raw feedback into insight someone can use.'],
    ['Exploring','Automated review collection and parsing, multilingual text processing, LLM-powered and sentiment analysis, background processing, and dashboards that present the results.'],
    ['Learning','How data travels the whole way, from collection to analysis to the screen.']],
-  tech:['LLM integration','API integration','Data visualization','UI/UX'], todo:'✎ my part: to write in my own words', links:[['Visit sarapai.app','https://sarapai.app/']]},
- {n:'04',c:'c-mint',title:'MMS Gallery',stamp:'Notes coming',cat:'digital experiences · web · visual design',
-  art:'<div class="frame" style="left:4%;top:6%;width:38%;height:62%;--c:var(--pink);--r:-4deg"></div><div class="frame" style="left:46%;top:18%;width:28%;height:40%;--c:var(--yellow);--r:3deg"></div><div class="frame" style="left:68%;top:50%;width:26%;height:44%;--c:var(--blue);--r:-2deg"></div>',
-  sub:'A gallery project',
-  notes:[['About','A gallery project that comes from my interest in visual presentation, web interfaces and digital experiences.']],
-  tech:[], todo:'✎ case study coming: problem, solution, my part, screenshots', links:[]},
+  tech:['LLM integration','API integration','Data visualization','UI/UX'], links:[['Visit sarapai.app','https://sarapai.app/']]},
+ {n:'04',c:'c-mint',title:'MMS Gallery',stamp:'Student exhibition',cat:'digital experiences · web · visual design',
+  art:'<img class="shot" style="--r:-2.5deg" src="mms.jpg" alt="MMS Gallery page: a grid of student project posters with category filters and search">',
+  sub:'An online exhibition of SDU student work',
+  notes:[['About','A gallery site where SDU students show creative projects across digital media, from UI/UX and 3D models to illustration and game art.'],['On the page','Category filters, search and sorting, artist pages, likes, sign-in, a language switch and a dark mode.'],['Why','It comes from my interest in visual presentation, web interfaces and digital experiences.']],
+  tech:[], links:[]},
  {n:'05',c:'c-kraft',title:'Turkish Game Jam',stamp:'2 days',cat:'game development · creative technology',
-  art:'<div class="pad"></div><p class="hand" style="position:absolute;right:4%;bottom:4%;rotate:-5deg;font-size:1.9rem">two days, one game</p>',
-  sub:'First time in Unity, one finished game',
-  notes:[['What','A two-day game jam. I had never touched Unity before it started. Two days later there was a finished game.'],
+  art:'<img class="shot small" style="--r:3deg" src="alas.jpg" alt="Cover art of ALAS: Drum of the Ancestors, a warrior with a drum facing a horned giant"><p class="hand" style="margin-top:14px;rotate:-3deg;font-size:1.7rem">two days, one game</p>',
+  sub:'ALAS: Drum of the Ancestors',
+  notes:[['What','A game made for Turkish Game Jam 2026. I had never touched Unity before the jam started. Two days later the game was finished and published.'],
    ['Learned','That I can pick up an unfamiliar tool fast when there is something to ship. Also creativity, teamwork and rapid prototyping on a very close deadline.']],
-  tech:['Unity'], todo:'✎ game title, my part, screenshots: to add', links:[]}
+  tech:['Unity'], links:[['Play on itch.io','https://madinaerzhan60.itch.io/ashina-alas-tgj2026'],['Watch the video','https://youtu.be/4MbdazA-Ah0']]}
 ];
 
 const leftHTML = p => `<div class="page leftp ${p.c}"><span class="stamp">${p.stamp}</span><span class="num">${p.n}</span><h3>${p.title}</h3><p class="cat">${p.cat}</p><div class="art" aria-hidden="true">${p.art}</div></div>`;
-const rightInner = p => `<h4>${p.sub}</h4>${p.notes.map(([k,v])=>`<div class="note"><b>${k}</b><span>${v}</span></div>`).join('')}${p.tech.length?`<div class="note"><b>Tech</b><span class="chips">${p.tech.map(t=>`<span>${t}</span>`).join('')}</span></div>`:''}<div class="todo">${p.todo}</div>${p.links.length?`<div class="links">${p.links.map(([t,u])=>`<a href="${u}">${t} ↗</a>`).join('')}</div>`:''}`;
+const rightInner = p => `<h4>${p.sub}</h4>${p.notes.map(([k,v])=>`<div class="note"><b>${k}</b><span>${v}</span></div>`).join('')}${p.tech.length?`<div class="note"><b>Tech</b><span class="chips">${p.tech.map(t=>`<span>${t}</span>`).join('')}</span></div>`:''}${p.links.length?`<div class="links">${p.links.map(([t,u])=>`<a href="${u}">${t} ↗</a>`).join('')}</div>`:''}`;
 
 const book = document.getElementById('book'), tabs = document.getElementById('tabs');
 const N = P.length;
