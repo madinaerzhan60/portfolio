@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Madina Yerzhankyzy Portfolio Zine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Anton&family=Caveat:wght@500;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Permanent+Marker&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a zine being assembled on a green cutting mat. Text lives on paper scraps; the mat stays quiet. */
+:root{
+  --mat:#1d5a4c; --mat-deep:#174a3e; --mat-line:rgba(255,255,255,.13);
+  --paper:#f5f2ea; --ink:#16161a; --pink:#ff4f9a; --blue:#2b4bff; --yellow:#ffe14a; --kraft:#cfa97c; --mint:#bfe8d4;
+  --f-display:"Anton","Impact","Arial Narrow Bold",sans-serif;
+  --f-body:"Courier Prime","Courier New",ui-monospace,monospace;
+  --f-hand:"Caveat","Segoe Print","Bradley Hand",cursive;
+  --f-marker:"Permanent Marker","Marker Felt",cursive;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{margin:0;background:var(--mat);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;overflow-x:hidden;
+  background-image:
+    linear-gradient(var(--mat-line) 1px,transparent 1px),linear-gradient(90deg,var(--mat-line) 1px,transparent 1px),
+    linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:120px 120px,120px 120px,24px 24px,24px 24px}
+a{color:inherit}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+h1,h2,h3,p{margin:0}
+h2,h3{text-wrap:balance}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+section{padding:70px 0;position:relative}
+
+/* paper + tape */
+.scrap{position:relative;filter:drop-shadow(0 10px 14px rgba(0,0,0,.28));rotate:var(--r,0deg);transition:scale .25s,filter .25s}
+.paper{background:var(--paper);padding:26px 28px;position:relative;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.tape{position:absolute;width:96px;height:28px;background:rgba(255,225,74,.82);top:-13px;left:50%;margin-left:-48px;rotate:-4deg;z-index:3;
+  clip-path:polygon(0 0,4% 18%,0 36%,4% 54%,0 72%,4% 100%,96% 100%,100% 82%,96% 64%,100% 46%,96% 28%,100% 0)}
+.tape.pink{background:rgba(255,79,154,.8)} .tape.blue{background:rgba(43,75,255,.72)}
+.tape.l{left:14%;rotate:-18deg} .tape.r{left:86%;rotate:14deg}
+.hand{font-family:var(--f-hand);font-size:1.5rem;line-height:1.15}
+.label{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.04em;font-size:.95rem}
+[data-drag]{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+[data-drag].lift{cursor:grabbing;scale:1.06;z-index:60!important;filter:drop-shadow(0 22px 22px rgba(0,0,0,.4))}
+.slap{animation:slap .55s cubic-bezier(.2,1.5,.4,1)}
+@keyframes slap{0%{scale:1.14;rotate:calc(var(--r,0deg) + 5deg)}100%{scale:1}}
+
+/* section headings: label-maker strips */
+.head{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:38px}
+.strip{font-family:"Rubik Mono One",var(--f-display);background:var(--ink);color:var(--paper);padding:10px 18px 8px;font-size:clamp(1.2rem,3.4vw,2rem);letter-spacing:.06em;rotate:-1.5deg;box-shadow:5px 5px 0 var(--pink);text-transform:uppercase}
+.head .hand{color:var(--paper)}
+
+/* cut line */
+.cutline{position:fixed;left:16px;top:0;bottom:0;width:0;border-left:2px dashed rgba(255,255,255,.35);z-index:5;pointer-events:none}
+.cutline span{position:absolute;left:-13px;top:0;font-size:24px;color:var(--yellow);rotate:90deg;will-change:translate}
+
+/* HERO */
+.hero{padding:44px 0 60px}
+.masthead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--paper);font-size:.85rem;text-transform:uppercase;letter-spacing:.12em;border-bottom:2px solid var(--paper);padding-bottom:10px;margin-bottom:40px}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:start}
+.ransom{display:flex;flex-wrap:wrap;gap:6px 8px;margin-bottom:8px}
+.ransom span{display:grid;place-items:center;min-width:1.05em;padding:.02em .16em;font-size:clamp(3.4rem,11vw,8.2rem);line-height:1.02;rotate:var(--r);box-shadow:3px 4px 0 rgba(0,0,0,.28);
+  animation:drop .7s cubic-bezier(.2,1.4,.4,1) backwards;animation-delay:calc(var(--i)*90ms)}
+@keyframes drop{0%{transform:translateY(-70px) rotate(-22deg) scale(1.35)}100%{transform:none}}
+.ransom .a{background:var(--pink);color:var(--paper);font-family:var(--f-display)}
+.ransom .b{background:var(--paper);color:var(--ink);font-family:"Abril Fatface",serif}
+.ransom .c{background:var(--ink);color:var(--yellow);font-family:"Rubik Mono One",sans-serif;font-size:clamp(2.8rem,9vw,6.8rem)}
+.ransom .d{background:var(--yellow);color:var(--ink);font-family:var(--f-marker)}
+.ransom .e{background:var(--blue);color:var(--paper);font-family:var(--f-body);font-weight:700}
+.ransom .f{background:var(--kraft);color:var(--ink);font-family:"Abril Fatface",serif;font-style:italic}
+.surname{font-family:var(--f-hand);font-weight:700;color:var(--paper);font-size:clamp(1.8rem,4.6vw,3rem);margin:6px 0 26px;rotate:-2deg;transform-origin:left}
+.intro{max-width:560px}
+.intro h1{font-family:"Abril Fatface",serif;font-weight:400;font-size:clamp(1.9rem,4.6vw,3rem);line-height:1.05;margin-bottom:14px}
+.intro h1 mark{background:var(--yellow);padding:0 .12em}
+.intro p+p{margin-top:10px}
+.intro .where{margin-top:16px;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em;border-top:1.5px dashed var(--ink);padding-top:10px}
+.pile{position:relative;min-height:470px}
+.polaroid{background:#fff;padding:14px 14px 54px;width:min(270px,100%);margin-left:auto;position:relative}
+.polaroid .ph{display:block;width:100%;aspect-ratio:1/1.05;object-fit:cover;object-position:50% 20%;background:#d6d0c2;-webkit-user-drag:none;pointer-events:none}
+.polaroid .hand{position:absolute;bottom:12px;left:0;right:0;text-align:center}
+.sticker{position:absolute;z-index:8;display:grid;place-items:center;text-align:center;font-family:var(--f-display);text-transform:uppercase;line-height:1;rotate:var(--r);filter:drop-shadow(0 5px 6px rgba(0,0,0,.3));transition:scale .2s}
+.sticker::after{content:"";position:absolute;right:0;bottom:0;width:0;height:0;background:linear-gradient(135deg,rgba(255,255,255,.95) 50%,transparent 50%);transition:width .25s,height .25s;border-top-left-radius:6px;box-shadow:-2px -2px 4px rgba(0,0,0,.2)}
+.sticker:hover::after{width:26px;height:26px}
+.s1{width:118px;height:118px;border-radius:50%;background:var(--yellow);font-size:1.5rem;left:-10px;top:250px;border:3px solid var(--ink)}
+.s2{background:var(--pink);color:var(--paper);padding:10px 16px;font-size:1.25rem;border-radius:999px;left:20px;top:30px;border:3px solid var(--paper)}
+.s3{background:var(--paper);padding:10px 14px;font-family:var(--f-body);font-weight:700;font-size:.85rem;right:-6px;top:370px;border:2px dashed var(--ink);text-transform:none}
+.s4{background:var(--blue);color:var(--paper);width:96px;height:96px;font-size:2.4rem;left:110px;top:380px;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);filter:none}
+.s4::after{display:none}
+.s5{background:var(--ink);color:var(--yellow);padding:9px 14px;font-family:var(--f-marker);font-size:1.05rem;text-transform:none;left:-30px;top:150px}
+
+/* marquee tape */
+.washi{background:var(--yellow);color:var(--ink);rotate:-1.2deg;margin:10px -20px;overflow:hidden;border-block:2px solid var(--ink);font-family:var(--f-display);font-size:1.5rem;text-transform:uppercase;white-space:nowrap}
+.washi div{display:inline-block;padding:8px 0;animation:run 26s linear infinite}
+@keyframes run{to{transform:translateX(-50%)}}
+
+/* BOOK */
+.book-ui{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font-family:var(--f-display);font-size:1rem;border:0;cursor:pointer;padding:8px 13px 6px;background:var(--paper);color:var(--ink);rotate:var(--r);transition:translate .15s,background .15s}
+.tabs button:hover{translate:0 -4px}
+.tabs button[aria-current="true"]{background:var(--pink);color:var(--paper)}
+.nav{display:flex;gap:10px;align-items:center;color:var(--paper)}
+.nav button{font-family:var(--f-marker);font-size:1rem;background:var(--ink);color:var(--paper);border:2px solid var(--paper);padding:8px 16px;cursor:pointer;transition:translate .15s,box-shadow .15s}
+.nav button:hover:not(:disabled){translate:-2px -2px;box-shadow:4px 4px 0 var(--yellow)}
+.nav button:disabled{opacity:.4;cursor:default}
+.book{position:relative;height:690px;perspective:2400px}
+.book::before{content:"";position:absolute;inset:0;box-shadow:0 26px 40px rgba(0,0,0,.45)}
+.page{position:absolute;inset:0;padding:30px 32px;overflow:hidden;background-color:var(--paper)}
+.base{position:absolute;left:0;top:0;width:50%;height:100%}
+.leaf{position:absolute;left:50%;top:0;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transition:transform .95s cubic-bezier(.6,.05,.25,1)}
+.leaf.flipped{transform:rotateY(-180deg)}
+.leaf .page{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.leaf .back{transform:rotateY(180deg)}
+.right::before,.leftp::before{content:"";position:absolute;top:0;bottom:0;width:46px;pointer-events:none;z-index:4}
+.right::before{left:0;background:linear-gradient(90deg,rgba(0,0,0,.2),transparent)}
+.leftp::before{right:0;background:linear-gradient(270deg,rgba(0,0,0,.2),transparent)}
+.right{overflow-y:auto;font-size:.9rem;line-height:1.45}
+.corner{position:absolute;right:0;bottom:0;width:54px;height:54px;border:0;padding:0;cursor:pointer;z-index:6;background:linear-gradient(135deg,transparent 50%,var(--kraft) 50%);transition:width .2s,height .2s}
+.corner:hover{width:74px;height:74px}
+/* left (cover) pages */
+.leftp{display:flex;flex-direction:column;gap:10px}
+.leftp .num{font-family:var(--f-display);font-size:7.5rem;line-height:.85;-webkit-text-stroke:2px var(--ink);color:transparent}
+.leftp h3{font-family:var(--f-display);text-transform:uppercase;font-size:clamp(2rem,3.6vw,3.1rem);line-height:.98;font-weight:400}
+.leftp .cat{font-family:var(--f-hand);font-size:1.4rem;line-height:1.1}
+.art{flex:1;position:relative;min-height:190px;margin-top:6px}
+.c-pink{background-color:var(--pink)} .c-blue{background-color:var(--blue);color:var(--paper)} .c-blue .num{-webkit-text-stroke-color:var(--paper)}
+.c-yellow{background-color:var(--yellow)} .c-kraft{background-color:var(--kraft)} .c-mint{background-color:var(--mint)}
+.stamp{position:absolute;right:20px;top:22px;font-family:var(--f-display);text-transform:uppercase;border:3px solid currentColor;padding:5px 10px 3px;rotate:9deg;font-size:.95rem;letter-spacing:.06em;opacity:.85}
+/* right (notes) pages */
+.right h4{font-family:var(--f-display);font-weight:400;text-transform:uppercase;font-size:1.5rem;margin:0 0 12px;line-height:1}
+.note{display:grid;grid-template-columns:92px 1fr;gap:10px;padding:9px 0;border-top:1.5px dashed rgba(22,22,26,.45)}
+.note b{font-family:var(--f-display);font-weight:400;text-transform:uppercase;font-size:.85rem;letter-spacing:.05em;padding-top:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{border:1.5px solid var(--ink);padding:1px 8px;font-size:.8rem;background:#fff}
+.todo{background:var(--yellow);padding:10px 12px;font-family:var(--f-hand);font-size:1.25rem;line-height:1.15;rotate:-1.2deg;margin-top:12px;box-shadow:3px 4px 0 rgba(0,0,0,.18)}
+.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.links a{background:var(--ink);color:var(--paper);text-decoration:none;padding:7px 12px;font-weight:700;font-size:.82rem;transition:translate .15s,box-shadow .15s}
+.links a:hover{translate:-2px -2px;box-shadow:4px 4px 0 var(--pink)}
+/* collage art */
+.ph-sq{position:absolute;width:44%;aspect-ratio:1;background:#0d1230;border:7px solid #fff;box-shadow:3px 5px 0 rgba(0,0,0,.25)}
+.ph-sq i{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff}
+.ph-sq .mv{width:8px;height:8px;background:var(--yellow);box-shadow:0 0 0 5px rgba(255,225,74,.25);animation:blink 2.4s steps(1) infinite}
+@keyframes blink{0%{translate:0 0}50%{translate:26px -14px}}
+.win{position:absolute;inset:6% 8% 10% 4%;background:#fff;border:3px solid var(--ink);rotate:-3deg;box-shadow:6px 7px 0 rgba(0,0,0,.25)}
+.win::before{content:"● ● ●";display:block;border-bottom:3px solid var(--ink);padding:2px 8px;font-size:.7rem;letter-spacing:2px}
+.win div{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px}
+.win div i{height:38px;background:var(--mint)} .win div i:nth-child(2){background:var(--pink)} .win div i:first-child{grid-column:1/-1;height:46px;background:var(--blue)}
+.bub{position:absolute;background:#fff;border:3px solid var(--ink);border-radius:16px 16px 16px 2px;padding:6px 10px;font-weight:700;font-size:.85rem;rotate:var(--r);color:var(--ink)}
+.bars{position:absolute;right:6%;bottom:4%;display:flex;align-items:flex-end;gap:7px;height:62%}
+.bars i{width:22px;background:var(--ink);transform-origin:bottom;animation:grow 3s ease-in-out infinite alternate;animation-delay:calc(var(--i)*-.5s)}
+@keyframes grow{to{transform:scaleY(.55)}}
+.frame{position:absolute;border:9px solid var(--ink);background:var(--c);box-shadow:4px 5px 0 rgba(0,0,0,.2);rotate:var(--r)}
+.rule{position:absolute;font-family:var(--f-display);font-size:1.25rem;padding:6px 12px 4px;border:3px solid var(--ink);background:#fff;rotate:var(--r);color:var(--ink)}
+.pad{position:absolute;left:12%;top:16%;width:62%;aspect-ratio:2/1;background:var(--ink);border-radius:70px;rotate:-8deg}
+.pad::before{content:"✚";position:absolute;left:16%;top:50%;translate:0 -50%;color:var(--paper);font-size:2.6rem}
+.pad::after{content:"";position:absolute;right:16%;top:50%;width:22px;height:22px;border-radius:50%;background:var(--pink);translate:0 -70%;box-shadow:-26px 18px 0 var(--yellow)}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:start}
+.about-grid .paper p+p{margin-top:12px}
+.quote{font-family:"Abril Fatface",serif;font-size:clamp(1.5rem,3.2vw,2.1rem);line-height:1.12;margin-bottom:16px}
+.cutouts{display:flex;flex-wrap:wrap;gap:12px 10px;padding-top:10px}
+.cut{padding:7px 13px 5px;font-family:var(--f-display);text-transform:uppercase;font-size:1.05rem;rotate:var(--r);box-shadow:3px 4px 0 rgba(0,0,0,.25);background:var(--paper)}
+.cut:nth-child(4n+1){background:var(--pink);color:var(--paper)} .cut:nth-child(4n+2){font-family:var(--f-marker);text-transform:none;background:var(--yellow)}
+.cut:nth-child(4n+3){background:var(--ink);color:var(--paper);font-family:var(--f-body);font-weight:700;font-size:.9rem} .cut:nth-child(5n){background:var(--blue);color:var(--paper)}
+.curious{margin-top:34px}
+.curious ul{margin:8px 0 0;padding-left:22px;columns:2;column-gap:26px;font-size:.92rem}
+.curious li{break-inside:avoid;margin-bottom:4px}
+.curious li::marker{content:"→ "}
+
+/* ACHIEVEMENTS */
+.wins{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 28px}
+.ticket{background:var(--paper);display:grid;grid-template-columns:1fr 84px;min-height:170px}
+.ticket>div{padding:18px 20px}
+.ticket .stub{border-left:2px dashed var(--ink);display:grid;place-items:center;font-family:var(--f-display);font-size:1.7rem;writing-mode:vertical-rl;padding:10px;background:var(--c,var(--yellow));color:var(--tc,var(--ink))}
+.ticket h3{font-family:var(--f-display);font-weight:400;text-transform:uppercase;font-size:1.35rem;line-height:1.05;margin-bottom:6px}
+.ticket small{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.ticket ul{margin:0;padding-left:18px;font-size:.92rem}
+.gpa{grid-column:span 1;background:var(--ink);color:var(--paper);padding:22px;display:flex;flex-direction:column;justify-content:center}
+.gpa strong{font-family:var(--f-display);font-weight:400;font-size:4.6rem;line-height:.9;color:var(--yellow);font-variant-numeric:tabular-nums}
+
+/* TOOLKIT */
+.kit{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+.card{background:#fff;padding:20px 20px 22px;background-image:repeating-linear-gradient(transparent 0 27px,rgba(43,75,255,.22) 27px 28px);background-position:0 46px}
+.card h3{font-family:var(--f-marker);font-weight:400;font-size:1.25rem;line-height:1.1;border-bottom:2px solid var(--pink);padding-bottom:8px;margin-bottom:4px;min-height:56px}
+.card ul{list-style:none;margin:0;padding:0;font-size:.9rem;line-height:28px}
+.foot{color:var(--paper);margin-top:20px;font-size:.85rem}
+
+/* PROGRAMS */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.lib h3{font-family:var(--f-display);font-weight:400;text-transform:uppercase;font-size:1.5rem;margin-bottom:10px}
+.lib table{width:100%;border-collapse:collapse;font-size:.92rem}
+.lib td{border-top:1.5px solid rgba(22,22,26,.5);padding:8px 4px;vertical-align:top}
+.lib td:first-child{font-family:var(--f-display);width:44px;color:var(--pink)}
+.edu .big{font-family:"Abril Fatface",serif;font-size:1.9rem;line-height:1.08;margin:6px 0 10px}
+
+/* BACK COVER */
+.back-cover{text-align:left;padding-bottom:110px}
+.bye{font-family:var(--f-display);text-transform:uppercase;color:var(--paper);font-size:clamp(3rem,11vw,8.5rem);line-height:.9;margin-bottom:30px}
+.bye em{font-family:var(--f-hand);font-style:normal;text-transform:none;color:var(--yellow);font-weight:700}
+.contact{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
+.gh{display:inline-block;background:var(--pink);color:var(--paper);font-family:var(--f-display);text-transform:uppercase;font-size:1.6rem;padding:14px 24px 10px;text-decoration:none;rotate:-2deg;box-shadow:6px 6px 0 var(--ink);transition:translate .15s,box-shadow .15s}
+.gh:hover{translate:-3px -3px;box-shadow:10px 10px 0 var(--ink)}
+.gh small{display:block;font-family:var(--f-body);text-transform:none;font-size:.8rem;letter-spacing:0}
+.colophon{color:var(--paper);font-size:.8rem;margin-top:60px;border-top:2px solid var(--paper);padding-top:12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;text-transform:uppercase;letter-spacing:.1em}
+#reset{position:fixed;right:16px;bottom:16px;z-index:80;font-family:var(--f-marker);font-size:.95rem;background:var(--paper);border:2px solid var(--ink);padding:8px 14px;cursor:pointer;rotate:-2deg;box-shadow:4px 4px 0 var(--ink)}
+#reset[hidden]{display:none}
+
+@media (max-width:900px){
+  .cutline{display:none}
+  section{padding:50px 0}
+  .hero-grid,.about-grid,.two{grid-template-columns:1fr}
+  .pile{min-height:0;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .polaroid{margin:0 auto 10px;order:-1;flex-basis:100%;max-width:250px}
+  .sticker{position:relative;inset:auto!important}
+  .wins{grid-template-columns:1fr 1fr} .kit{grid-template-columns:1fr 1fr}
+  .book-ui{display:none}
+  .book{height:auto;perspective:none;display:grid;gap:0}
+  .book::before{display:none}
+  .base,.leaf{position:static;width:auto;height:auto;transform:none!important;transition:none}
+  .leaf{display:contents}
+  .page{position:relative;inset:auto;transform:none!important;backface-visibility:visible;overflow:visible;box-shadow:0 10px 16px rgba(0,0,0,.3)}
+  .leftp{min-height:400px;margin-top:34px;rotate:-.6deg}
+  .right{rotate:.5deg}
+  .right::before,.leftp::before,.corner{display:none}
+  .leaf:last-child .back{display:none}
+}
+@media (max-width:560px){
+  .wins,.kit{grid-template-columns:1fr}
+  .curious ul{columns:1}
+  .note{grid-template-columns:1fr;gap:2px}
+  .paper{padding:22px 20px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div class="cutline" aria-hidden="true"><span id="scissors">✂</span></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="masthead"><span>Portfolio zine · Issue 01</span><span>Almaty, Kazakhstan</span><span>Creative technologist &amp; student developer</span></div>
+    <div class="hero-grid">
+      <div>
+        <div class="ransom" aria-label="Madina">
+          <span class="a" style="--r:-5deg;--i:0">M</span><span class="b" style="--r:3deg;--i:1">A</span><span class="c" style="--r:-2deg;--i:2">D</span><span class="d" style="--r:5deg;--i:3">I</span><span class="e" style="--r:-4deg;--i:4">N</span><span class="f" style="--r:2deg;--i:5">A</span>
+        </div>
+        <p class="surname">Yerzhankyzy</p>
+        <div class="scrap intro" style="--r:-.8deg">
+          <i class="tape l pink"></i>
+          <div class="paper torn">
+            <h1>Technology meets <mark>imagination.</mark></h1>
+            <p>I'm Madina, an Information Systems student exploring artificial intelligence, software engineering, and creative technology.</p>
+            <p>I build and experiment with digital products at the intersection of engineering, design, and human experience.</p>
+            <p class="where">SDU University · BSc Information Systems · class of 2029</p>
+          </div>
+        </div>
+      </div>
+      <div class="pile">
+        <div class="scrap polaroid" data-drag style="--r:4deg">
+          <i class="tape"></i>
+          <img class="ph" src="photo.jpg" alt="Madina smiling, holding up a medal, with the flag of Kazakhstan over her shoulders">
+          <p class="hand">hi, it's me</p>
+        </div>
+        <div class="sticker s2" data-drag style="--r:-8deg">drag me!</div>
+        <div class="sticker s5" data-drag style="--r:6deg">code + glue</div>
+        <div class="sticker s1" data-drag style="--r:-12deg">AI ×<br>design</div>
+        <div class="sticker s4" data-drag style="--r:10deg" aria-hidden="true">★</div>
+        <div class="sticker s3" data-drag style="--r:5deg">KZ / RU / EN</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="washi" aria-hidden="true"><div id="washi"></div></div>
+
+<main>
+<section id="projects">
+  <div class="wrap">
+    <div class="head"><h2 class="strip">Selected projects</h2><p class="hand">five spreads. flip through →</p></div>
+    <div class="book-ui">
+      <div class="tabs" id="tabs" role="group" aria-label="Jump to a project"></div>
+      <div class="nav"><button id="prev" type="button">← back</button><span id="count" class="label">01 / 06</span><button id="next" type="button">flip →</button></div>
+    </div>
+    <div class="book" id="book" tabindex="0" aria-label="Project spreads. Use the left and right arrow keys to flip pages."></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="head"><h2 class="strip" style="box-shadow:5px 5px 0 var(--yellow)">About me</h2><p class="hand">the part between engineering and creativity</p></div>
+    <div class="about-grid">
+      <div class="scrap" style="--r:-1deg" data-slap>
+        <i class="tape l"></i><i class="tape r pink"></i>
+        <div class="paper torn">
+          <p class="quote">Technology should not only work. It should feel intuitive, meaningful, and thoughtfully designed.</p>
+          <p>I like understanding how systems work behind the scenes, and I care just as much about how people experience them. Most of what I make sits somewhere between those two.</p>
+          <p>Right now I'm a second-year student building my technical base, entering competitions, and shipping real projects with teams. Long term, I want to grow into AI engineering and make products that are technically deep, good-looking, and useful.</p>
+        </div>
+      </div>
+      <div>
+        <p class="hand" style="color:var(--paper)">things I keep cutting out and saving:</p>
+        <div class="cutouts" id="cutouts"></div>
+        <div class="scrap curious" style="--r:1.2deg" data-slap>
+          <i class="tape blue"></i>
+          <div class="paper">
+            <p class="label">Currently curious about</p>
+            <ul>
+              <li>AI reliability and evaluation</li><li>LLM hallucination detection</li><li>Multilingual AI systems</li><li>Kazakh-language AI</li><li>Creative AI tools</li><li>Scientific data visualization</li><li>Human-centered technology</li><li>AI for business analytics</li><li>Health technology</li><li>Interactive digital experiences</li>
+            </ul>
+            <p style="font-size:.8rem;margin-top:8px"><i>Interests I'm exploring, not finished projects.</i></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="wrap">
+    <div class="head"><h2 class="strip" style="box-shadow:5px 5px 0 var(--blue)">Achievements</h2><p class="hand">ticket stubs I kept</p></div>
+    <div class="wins">
+      <div class="scrap" style="--r:-2deg" data-slap><div class="ticket">
+        <div><small>Barcelona, Spain · 2025</small><h3>International STEM Olympiad, Grand Final</h3><ul><li>Bronze Medal in Mathematics</li><li>Honorable Mention in Coding</li></ul></div>
+        <div class="stub" style="--c:var(--pink);--tc:var(--paper)">BRONZE</div></div></div>
+      <div class="scrap" style="--r:1.5deg" data-slap><div class="ticket">
+        <div><small>Kazakhstan · 2025</small><h3>Republican Bilim Shyny Informatics Olympiad</h3><ul><li>First Place in Informatics</li></ul></div>
+        <div class="stub">1ST</div></div></div>
+      <div class="scrap" style="--r:-1deg" data-slap><div class="ticket">
+        <div><small>Astana, Kazakhstan · 2024</small><h3>International STEM Olympiad</h3><ul><li>Third Degree Diploma</li></ul></div>
+        <div class="stub" style="--c:var(--blue);--tc:var(--paper)">3RD</div></div></div>
+      <div class="scrap" style="--r:2deg" data-slap><div class="gpa"><span class="label">GPA at SDU University</span><strong>3.84</strong><span>out of 4.00 · BSc Information Systems</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="toolkit">
+  <div class="wrap">
+    <div class="head"><h2 class="strip">Toolkit</h2><p class="hand">what's on my desk</p></div>
+    <div class="kit">
+      <div class="scrap" style="--r:-1.5deg" data-slap><i class="tape pink"></i><div class="card"><h3>Programming &amp; CS</h3><ul><li>Java</li><li>Python</li><li>Object-oriented programming</li><li>Data structures &amp; algorithms</li><li>Computer networking</li><li>Operating systems</li><li>Design patterns</li></ul></div></div>
+      <div class="scrap" style="--r:1deg" data-slap><i class="tape"></i><div class="card"><h3>Web &amp; tools</h3><ul><li>HTML, CSS, JavaScript</li><li>TypeScript *</li><li>Git and GitHub</li><li>Supabase *</li><li>Vercel *</li><li>API integration</li></ul></div></div>
+      <div class="scrap" style="--r:-.8deg" data-slap><i class="tape blue"></i><div class="card"><h3>Artificial intelligence</h3><ul><li>Machine learning fundamentals</li><li>LLM integration</li><li>AI-powered applications</li><li>Prompt engineering</li><li>AI evaluation</li><li>Data processing</li></ul></div></div>
+      <div class="scrap" style="--r:1.8deg" data-slap><i class="tape pink"></i><div class="card"><h3>Design &amp; creative</h3><ul><li>Figma</li><li>UI/UX design</li><li>Product design</li><li>Visual communication</li><li>Rapid prototyping</li></ul></div></div>
+    </div>
+    <p class="foot">* used in team projects, still learning them in depth.</p>
+  </div>
+</section>
+
+<section id="programs">
+  <div class="wrap">
+    <div class="head"><h2 class="strip" style="box-shadow:5px 5px 0 var(--yellow)">Programs &amp; education</h2></div>
+    <div class="two">
+      <div class="scrap lib" style="--r:-1deg" data-slap><i class="tape l blue"></i>
+        <div class="paper torn"><h3>Where I've taken part</h3>
+          <table>
+            <tr><td>01</td><td>AI-SANA, Phase 2 (135-hour educational program)</td></tr>
+            <tr><td>02</td><td>SDU Technopark</td></tr>
+            <tr><td>03</td><td>NASA Space Apps Challenge 2026</td></tr>
+            <tr><td>04</td><td>Decentrathon 6.0</td></tr>
+            <tr><td>05</td><td>Turkish Game Jam (Unity)</td></tr>
+            <tr><td>06</td><td>University entrepreneurship initiatives</td></tr>
+            <tr><td>07</td><td>Design for the university's Korean Club</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="scrap edu" style="--r:1.5deg" data-slap><i class="tape pink"></i>
+        <div class="paper c-mint"><p class="label">Education</p>
+          <p class="big">SDU University, Almaty</p>
+          <p>BSc in Information Systems. Second-year undergraduate, graduating June 2029.</p>
+          <p style="margin-top:10px">Languages: Kazakh, Russian, English.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="back-cover">
+  <div class="wrap">
+    <p class="bye">Let's make <em>something.</em></p>
+    <div class="contact">
+      <a class="gh" href="https://github.com/madinaerzhan60">GitHub<small>github.com/madinaerzhan60</small></a>
+      <div class="todo" style="max-width:260px;rotate:2deg">✎ note to self: add email, LinkedIn or Telegram here</div>
+    </div>
+    <div class="colophon"><span>Madina Yerzhankyzy · 2026</span><span>Cut, pasted and coded in Almaty</span></div>
+  </div>
+</footer>
+<button id="reset" type="button" hidden>put everything back</button>
+
+<script>
+(function(){
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const rnd = (a,b)=>a+Math.random()*(b-a);
+
+/* ---------- project data ---------- */
+const TODO = '✎ my part + what I learned: to write in my own words';
+const P = [
+ {n:'01',c:'c-blue',title:'SkyShift',stamp:'Team hackathon',cat:'scientific visualization · space technology · interactive web',
+  art:'<div class="ph-sq" style="left:4%;top:6%;rotate:-6deg"><i style="left:20%;top:30%"></i><i style="left:70%;top:20%"></i><i style="left:55%;top:75%"></i><i class="mv" style="left:38%;top:55%"></i></div><div class="ph-sq" style="right:6%;top:22%;rotate:5deg"><i style="left:20%;top:30%"></i><i style="left:70%;top:20%"></i><i style="left:55%;top:75%"></i><i class="mv" style="left:38%;top:55%;animation-delay:-1.2s"></i></div><p class="hand" style="position:absolute;left:6%;bottom:0;color:var(--yellow)">same sky, months apart. one dot moved.</p>',
+  sub:'NASA Space Apps Challenge 2026',
+  notes:[['Problem','A distant planet would look like one faint dot that shifts between SPHEREx images taken months apart, lost among stars and detector artefacts.'],
+   ['Vision','Let people who are not astrophysicists see that comparison and try it themselves.'],
+   ['Solution','Our team built an offline Python pipeline that turns SPHEREx images into static pictures and data, plus a web tool with a parallax simulator, a comparison view that only pairs images of nearly the same wavelength, and a timelapse of any point in the sky.'],
+   ['Honest note','The repository documents a blind test on Neptune, a planet we already know. Nothing here claims a Planet X discovery.']],
+  tech:['React','TypeScript','Vite','Python','NASA IRSA SPHEREx data'], todo:TODO,
+  links:[['Live site','https://nasa-spherex-seven.vercel.app/'],['Repository','https://github.com/aknur3289-spec/nasa-spherex']]},
+ {n:'02',c:'c-pink',title:'OFE SDU',stamp:'Team project',cat:'full-stack · product · university entrepreneurship',
+  art:'<div class="win"><div><i></i><i></i><i></i><i></i></div></div>',
+  sub:'Office of Entrepreneurship, SDU University',
+  notes:[['Problem','Startups, events and opportunities at the university were hard for students to find in one place.'],
+   ['Vision','One platform for the whole entrepreneurial ecosystem at SDU.'],
+   ['Solution','A site built with a team: project and startup showcases, events and news, sign-in with Google, admin tools, multilingual and responsive pages, all backed by a database.']],
+  tech:['React','Vite','TypeScript','Supabase','Google OAuth','Vercel'], todo:TODO,
+  links:[['Visit ofesdu.app','https://ofesdu.app']]},
+ {n:'03',c:'c-yellow',title:'SARAP',stamp:'In development',cat:'artificial intelligence · data analytics · full-stack',
+  art:'<span class="bub" style="left:4%;top:8%;--r:-5deg">★★★★★ loved it</span><span class="bub" style="left:14%;top:38%;--r:4deg">★★☆☆☆ too slow…</span><span class="bub" style="left:2%;top:68%;--r:-3deg">жақсы! · хорошо!</span><div class="bars"><i style="height:45%;--i:1"></i><i style="height:80%;--i:2"></i><i style="height:60%;--i:3"></i><i style="height:100%;--i:4"></i></div>',
+  sub:'AI review analytics for businesses in Kazakhstan',
+  notes:[['Problem','Customer reviews are unstructured, come in several languages, and are hard for a business to act on.'],
+   ['Vision','Turn raw feedback into insight someone can use.'],
+   ['Exploring','Automated review collection and parsing, multilingual text processing, LLM-powered and sentiment analysis, background processing, and dashboards that present the results.'],
+   ['Learning','How data travels the whole way, from collection to analysis to the screen.']],
+  tech:['LLM integration','API integration','Data visualization','UI/UX'], todo:'✎ my part: to write in my own words', links:[['Visit sarapai.app','https://sarapai.app/']]},
+ {n:'04',c:'c-mint',title:'MMS Gallery',stamp:'Notes coming',cat:'digital experiences · web · visual design',
+  art:'<div class="frame" style="left:4%;top:6%;width:38%;height:62%;--c:var(--pink);--r:-4deg"></div><div class="frame" style="left:46%;top:18%;width:28%;height:40%;--c:var(--yellow);--r:3deg"></div><div class="frame" style="left:68%;top:50%;width:26%;height:44%;--c:var(--blue);--r:-2deg"></div>',
+  sub:'A gallery project',
+  notes:[['About','A gallery project that comes from my interest in visual presentation, web interfaces and digital experiences.']],
+  tech:[], todo:'✎ case study coming: problem, solution, my part, screenshots', links:[]},
+ {n:'05',c:'c-kraft',title:'Turkish Game Jam',stamp:'2 days',cat:'game development · creative technology',
+  art:'<div class="pad"></div><p class="hand" style="position:absolute;right:4%;bottom:4%;rotate:-5deg;font-size:1.9rem">two days, one game</p>',
+  sub:'First time in Unity, one finished game',
+  notes:[['What','A two-day game jam. I had never touched Unity before it started. Two days later there was a finished game.'],
+   ['Learned','That I can pick up an unfamiliar tool fast when there is something to ship. Also creativity, teamwork and rapid prototyping on a very close deadline.']],
+  tech:['Unity'], todo:'✎ game title, my part, screenshots: to add', links:[]}
+];
+
+const leftHTML = p => `<div class="page leftp ${p.c}"><span class="stamp">${p.stamp}</span><span class="num">${p.n}</span><h3>${p.title}</h3><p class="cat">${p.cat}</p><div class="art" aria-hidden="true">${p.art}</div></div>`;
+const rightInner = p => `<h4>${p.sub}</h4>${p.notes.map(([k,v])=>`<div class="note"><b>${k}</b><span>${v}</span></div>`).join('')}${p.tech.length?`<div class="note"><b>Tech</b><span class="chips">${p.tech.map(t=>`<span>${t}</span>`).join('')}</span></div>`:''}<div class="todo">${p.todo}</div>${p.links.length?`<div class="links">${p.links.map(([t,u])=>`<a href="${u}">${t} ↗</a>`).join('')}</div>`:''}`;
+
+const book = document.getElementById('book'), tabs = document.getElementById('tabs');
+const N = P.length;
+let html = `<div class="base">${leftHTML(P[0])}</div>`;
+P.forEach((p,k)=>{
+  html += `<div class="leaf" data-k="${k}"><div class="page right front">${rightInner(p)}${k<N-1?'<button class="corner" type="button" aria-label="Next project"></button>':''}</div>${k<N-1?leftHTML(P[k+1]).replace('class="page leftp','class="page back leftp'):'<div class="page back"></div>'}</div>`;
+});
+book.innerHTML = html;
+const leaves = [...book.querySelectorAll('.leaf')];
+P.forEach((p,k)=>{const b=document.createElement('button');b.type='button';b.textContent=p.n+' '+p.title;b.style.setProperty('--r',rnd(-2.5,2.5).toFixed(1)+'deg');b.onclick=()=>go(k);tabs.appendChild(b);});
+let cur = 0;
+function layer(){leaves.forEach((l,k)=>{l.style.zIndex = l.classList.contains('flipped') ? k+1 : N-k;});}
+function go(to){
+  to = Math.max(0,Math.min(N-1,to)); if(to===cur) return;
+  const fwd = to>cur, ks=[]; if(fwd){for(let k=cur;k<to;k++)ks.push(k);} else {for(let k=cur-1;k>=to;k--)ks.push(k);}
+  ks.forEach((k,i)=>setTimeout(()=>{const l=leaves[k];l.style.zIndex=50+i;l.classList.toggle('flipped',fwd);setTimeout(layer,reduce?0:960);},reduce?0:i*140));
+  cur = to; ui();
+}
+function ui(){
+  document.getElementById('count').textContent = P[cur].n+' / 0'+N;
+  document.getElementById('prev').disabled = cur===0; document.getElementById('next').disabled = cur===N-1;
+  [...tabs.children].forEach((b,k)=>b.setAttribute('aria-current',k===cur));
+}
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('next').onclick=()=>go(cur+1);
+book.addEventListener('click',e=>{if(e.target.closest('.corner'))go(cur+1);});
+book.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){go(cur+1);e.preventDefault();}if(e.key==='ArrowLeft'){go(cur-1);e.preventDefault();}});
+layer(); ui();
+
+/* ---------- washi marquee + cutouts ---------- */
+const words = ['artificial intelligence','design','code','product thinking','creative technology','hackathons','curiosity'];
+const run = words.map(w=>w+' ✂ ').join('');
+document.getElementById('washi').textContent = (run+run+run+run);
+const cuts = ['Artificial Intelligence','machine learning','AI engineering','Creative technology','Full-stack','UI/UX design','Product design','entrepreneurship','scientific visualization','Research'];
+document.getElementById('cutouts').innerHTML = cuts.map(c=>`<span class="cut" data-drag style="--r:${rnd(-5,5).toFixed(1)}deg">${c}</span>`).join('');
+
+/* ---------- torn paper edges ---------- */
+document.querySelectorAll('.torn').forEach(el=>{
+  const top=[],bot=[];
+  for(let x=0;x<=100;x+=rnd(2.5,5)){top.push(`${x.toFixed(1)}% ${rnd(0,6).toFixed(1)}px`);}
+  top.push('100% 0px');
+  for(let x=100;x>=0;x-=rnd(2.5,5)){bot.push(`${x.toFixed(1)}% calc(100% - ${rnd(0,7).toFixed(1)}px)`);}
+  bot.push('0% 100%');
+  el.style.clipPath = `polygon(${top.concat(bot).join(',')})`;
+});
+
+/* ---------- drag + throw ---------- */
+const reset = document.getElementById('reset'); let z = 20;
+document.querySelectorAll('[data-drag]').forEach(el=>{
+  let x=0,y=0,sx,sy,vx=0,vy=0,lt,raf;
+  const put=()=>{el.style.translate=`${x}px ${y}px`;};
+  el._home=()=>{cancelAnimationFrame(raf);x=y=0;el.style.transition='translate .5s cubic-bezier(.2,1.3,.4,1)';put();setTimeout(()=>el.style.transition='',520);};
+  el.addEventListener('pointerdown',e=>{
+    if(e.button) return; cancelAnimationFrame(raf);
+    el.setPointerCapture(e.pointerId); el.classList.add('lift'); el.style.zIndex=++z;
+    sx=e.clientX-x; sy=e.clientY-y; lt=performance.now(); vx=vy=0;
+    const move=ev=>{const nx=ev.clientX-sx,ny=ev.clientY-sy,t=performance.now(),dt=Math.max(1,t-lt);vx=(nx-x)/dt;vy=(ny-y)/dt;lt=t;x=nx;y=ny;put();};
+    const up=()=>{
+      el.classList.remove('lift'); el.removeEventListener('pointermove',move);
+      reset.hidden=false;
+      if(reduce) return;
+      const glide=()=>{vx*=.92;vy*=.92;x+=vx*16;y+=vy*16;put();if(Math.abs(vx)+Math.abs(vy)>.02)raf=requestAnimationFrame(glide);};
+      glide();
+    };
+    el.addEventListener('pointermove',move);
+    el.addEventListener('pointerup',up,{once:true}); el.addEventListener('pointercancel',up,{once:true});
+  });
+});
+reset.onclick=()=>{document.querySelectorAll('[data-drag]').forEach(el=>el._home());reset.hidden=true;};
+
+/* ---------- slap-in on scroll (items are visible at rest) ---------- */
+if(!reduce && 'IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('slap');io.unobserve(e.target);}}),{threshold:.25});
+  document.querySelectorAll('[data-slap]').forEach(el=>io.observe(el));
+}
+
+/* ---------- scissors follow the scroll ---------- */
+const sc=document.getElementById('scissors');
+const onScroll=()=>{const max=document.documentElement.scrollHeight-innerHeight;const p=max>0?scrollY/max:0;sc.style.translate=`0 ${p*(innerHeight-40)}px`;};
+addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+</script>
+</body>
+</html>
